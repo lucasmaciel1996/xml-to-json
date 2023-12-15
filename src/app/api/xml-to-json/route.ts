@@ -1,13 +1,9 @@
-
-import { revalidatePath } from 'next/cache'
 import { NextRequest } from 'next/server'
-import {convertXML}  from 'simple-xml-to-json'
-
-
+import  xml from 'xml-js'
 
 export async function POST(req: NextRequest) {
-    const xml = await req.text()
+    const xmlString = await req.text()
 
-    const jsonData = convertXML(xml)
+    const jsonData = JSON.parse(xml.xml2json(xmlString,{compact:true,ignoreComment: true,}))
     return Response.json(jsonData)
   }
